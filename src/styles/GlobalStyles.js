@@ -126,4 +126,10 @@ export const GlobalStyle = createGlobalStyle`
         transform: rotate(360deg);
         }
     }
+    input:focus {
+    box-shadow: 0 0 0 0;
+    border: 0 none;
+    outline: 0;
+    background-color: var(--Grey-2);
+  }
 `;

@@ -1,42 +1,37 @@
+import { useContext } from "react";
 import { useState } from "react";
-import { useEffect } from "react";
-import { Navigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { instance } from "../../service/api";
+import { Navigate, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 import { DivDashBord } from "./DivDashBord";
 import { HeaderDashBord } from "./HeaderDashBord";
+import { ListTec } from "./ListTec";
 import { ModalLogout } from "./ModalLogout";
 import { StyledDivDash } from "./styled";
 
-export function Dashbord({ user, setUser }) {
-  const token = localStorage.getItem("@token");
+export function Dashbord() {
   const [renderModal, setRenderModal] = useState(false);
-  useEffect(() => {
-    async function GET() {
-      try {
-        const response = await instance.get("profile");
-        setUser(response.data);
-        console.log(user);
-      } catch {
-        toast.error("Erro token");
-      }
-    }
-    GET();
-  }, [setUser]);
+
+  const { user } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  if (user === null) {
+    navigate("/login");
+  }
 
   return (
     <div>
-      {renderModal && (
-        <ModalLogout setRenderModal={setRenderModal} setUser={setUser} />
-      )}
-      {token ? (
-        <StyledDivDash>
-          <HeaderDashBord setRenderModal={setRenderModal} />
-          <DivDashBord user={user} />
-        </StyledDivDash>
-      ) : (
-        <Navigate to={"*"} />
-      )}
+      {renderModal && <ModalLogout setRenderModal={setRenderModal} />}
+      <StyledDivDash>
+        <HeaderDashBord setRenderModal={setRenderModal} />
+        <DivDashBord />
+        <div className="div-abrirModal">
+          <h3 className="Title3">Tecnologias</h3>
+
+          <button>+</button>
+        </div>
+        <ListTec />
+      </StyledDivDash>
     </div>
   );
 }

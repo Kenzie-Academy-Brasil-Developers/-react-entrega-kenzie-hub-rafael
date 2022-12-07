@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthContext.jsx";
 import { StyledModalLogout } from "./styled.js";
 
-export function ModalLogout({ setUser, setRenderModal }) {
+export function ModalLogout({ setRenderModal }) {
   const [logout, setLogout] = useState(false);
+
+  const { setUser } = useContext(AuthContext);
 
   function logoutDash() {
     setLogout(true);

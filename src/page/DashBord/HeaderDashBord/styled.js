@@ -8,7 +8,7 @@ export const StyledHeaderDash = styled.header`
   align-items: center;
   justify-content: center;
 
-  border: 1px solid var(--Grey-3);
+  border-bottom: 1px solid var(--Grey-3);
 
   div {
     width: 90%;

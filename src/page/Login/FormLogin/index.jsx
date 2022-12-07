@@ -2,17 +2,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Button } from "../../../components/Button";
 import { Input } from "../../../components/Input";
-import { api } from "../../../service/api";
 import { StyledForm } from "./styled";
 import { registerSchemaLogin } from "./registerSchemaLogin/index.js";
-import { toast } from "react-toastify";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { useState } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../../context/AuthContext";
 
 export function FormLogin() {
-  const [loading, setLoading] = useState(false);
-  const [nextPage, setNextPage] = useState(true);
+  const { login, loading } = useContext(AuthContext);
+
   const {
     register,
     handleSubmit,
@@ -21,31 +20,13 @@ export function FormLogin() {
     resolver: yupResolver(registerSchemaLogin),
   });
 
-  async function submit(data) {
-    setLoading(true);
-    try {
-      const response = await api.post("sessions", data);
-      localStorage.setItem("@token", JSON.stringify(response.data.token));
-      toast.success("Login feito com sucesso.");
-      setNextPage(false);
-      setTimeout(() => {
-        setNextPage(true);
-      }, 500);
-    } catch (error) {
-      toast.error("Usuario não existe");
-      setLoading(false);
-    } finally {
-      setLoading(false);
-    }
-  }
   return (
-    <StyledForm onSubmit={handleSubmit(submit)} noValidate>
-      {!nextPage ? <Navigate to={"/dashbord"} /> : ""}
+    <StyledForm onSubmit={handleSubmit(login)} noValidate>
       <Input
         register={register}
         name="email"
         type="email"
-        label=" Email"
+        label="Email"
         id="login-email"
         placeholder="digite aqui seu E-mail"
       />
