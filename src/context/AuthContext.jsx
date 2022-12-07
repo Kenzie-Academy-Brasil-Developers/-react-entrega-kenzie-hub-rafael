@@ -59,6 +59,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     }
   }
+  console.log(user);
 
   return (
     <AuthContext.Provider

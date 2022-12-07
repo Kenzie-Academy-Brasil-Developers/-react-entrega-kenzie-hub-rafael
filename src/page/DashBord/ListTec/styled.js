@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const StyledListTec = styled.ul`
   width: 90%;
-  height: min-content;
+  min-height: 350px;
+  max-height: 350px;
 
   gap: 20px;
   margin-left: 5%;
@@ -17,11 +18,13 @@ export const StyledListTec = styled.ul`
 
   list-style: none;
 
-  li {
-    width: 80%;
-    height: 50px;
+  overflow: auto;
 
-    padding: 0 5% 0 5%;
+  li {
+    width: 90%;
+    min-height: 50px;
+
+    padding: 0 2.5% 0 2.5%;
 
     border-radius: 4px;
 
@@ -59,6 +62,13 @@ export const StyledListTec = styled.ul`
   }
   li:hover {
     background-color: var(--Grey-2);
+  }
+  button {
+    background: none;
+
+    border: none;
+
+    color: var(--Grey-0);
   }
   @media (min-width: 1000px) {
     width: 60%;

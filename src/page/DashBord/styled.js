@@ -38,4 +38,7 @@ export const StyledDivDash = styled.div`
       margin-left: 20%;
     }
   }
+  .paragraph {
+    text-align: center;
+  }
 `;
