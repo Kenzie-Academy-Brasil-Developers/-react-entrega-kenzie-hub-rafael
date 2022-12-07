@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,8 +10,34 @@ export const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
+  const [remaking, setRemaking] = useState(true);
 
   const navigate = useNavigate();
+  useEffect(() => {
+    async function loadUser() {
+      const token = JSON.parse(localStorage.getItem("@token"));
+      console.log(token);
+
+      if (!token) {
+        setRemaking(false);
+        return;
+      }
+
+      try {
+        const { data } = await api.get("/profile", {
+          headers: {
+            authorization: `Beare ${token}`,
+          },
+        });
+        setUser(data);
+      } catch (error) {
+        toast.error("deu merda");
+      } finally {
+        setRemaking(false);
+      }
+    }
+    loadUser();
+  }, []);
 
   async function login(data) {
     try {
@@ -40,6 +67,7 @@ export const AuthProvider = ({ children }) => {
         setUser,
         user,
         loading,
+        remaking,
       }}
     >
       {children}

@@ -43,6 +43,7 @@ export const StyledListTec = styled.ul`
 
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
 
     .delet-img {
