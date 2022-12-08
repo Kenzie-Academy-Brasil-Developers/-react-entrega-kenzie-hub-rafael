@@ -41,6 +41,19 @@ export function FormEdit({ setModalEdit, techs: tecnologia }) {
       toast.error("error");
     }
   }
+  async function delet() {
+    try {
+      const response = await instance.delete(`/users/techs/${tecnologia.id}`);
+
+      const techs = user.techs.filter(({ id }) => id !== idTech);
+      const newUse = { ...user, techs };
+
+      setUser(newUse);
+      setModalEdit(false);
+    } catch (error) {
+      toast.error("error");
+    }
+  }
   return (
     <StyledFormEdit onSubmit={handleSubmit(editTec)} noValidate>
       <div className="div-top">
@@ -71,7 +84,9 @@ export function FormEdit({ setModalEdit, techs: tecnologia }) {
         <button className="registerTech" type="submit">
           Cadastrar Tecnologia
         </button>
-        <button className="deletTech">Excluir</button>
+        <button onClick={() => delet()} className="deletTech">
+          Excluir
+        </button>
       </div>
     </StyledFormEdit>
   );
