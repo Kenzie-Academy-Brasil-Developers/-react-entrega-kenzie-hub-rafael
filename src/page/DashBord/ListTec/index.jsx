@@ -21,21 +21,27 @@ export function ListTec({ setModalEdit, setTches }) {
       toast.error("deu merda");
     }
   }
-  function editTches(element) {
-    setModalEdit(true);
-    setTches(element);
+  function editTches(event, element) {
+    if (event.target.id === element.title) {
+      setModalEdit(true);
+      setTches(element);
+    }
   }
 
   return (
     <StyledListTec>
       {techs.length ? (
         techs.map((element, i) => (
-          <li key={i} onClick={() => editTches(element)}>
+          <li
+            id={element.title}
+            key={i}
+            onClick={(event) => editTches(event, element)}
+          >
             <p className="Title3">{element.title}</p>
             <div>
               <span className="Headline">{element.status}</span>
               <button id={element.id} onClick={() => delet(element.id, i)}>
-                <RiDeleteBin6Line className="delet-img" />
+                <RiDeleteBin6Line id={element.id} className="delet-img" />
               </button>
             </div>
           </li>
