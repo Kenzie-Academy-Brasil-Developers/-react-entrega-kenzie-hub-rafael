@@ -3,55 +3,59 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 import { toast } from "react-toastify";
-import { Button } from "../../../../components/Button";
 import { AuthContext } from "../../../../context/AuthContext";
 import { instance } from "../../../../service/api";
 import { schemaCreatTec } from "./schemaCreatTec";
-import { StyledFormModal } from "./styled";
+import { StyledFormEdit } from "./styled";
 
-export function FormModal({ setModalCreatTec }) {
+export function FormEdit({ setModalEdit, techs: tecnologia }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: { status: "Iniciante" },
+    defaultValues: { status: `${tecnologia.status}` },
     mode: "onblur",
     resolver: yupResolver(schemaCreatTec),
   });
 
-  const { user, setUser } = useContext(AuthContext);
+  const { setUser, user } = useContext(AuthContext);
 
-  async function creatTec(data) {
+  const { id: idTech } = tecnologia;
+
+  async function editTec(data) {
     try {
-      const response = await instance.post("/users/techs", data);
-      const { techs: newTechs } = user;
-      const techs = [...newTechs, response.data];
-      const newUser = { ...user, techs };
-      setUser(newUser);
-      setModalCreatTec(false);
+      const response = await instance.put(
+        `/users/techs/${tecnologia.id}`,
+        data
+      );
+      const techs = user.techs.filter(({ id }) => id !== idTech);
+
+      techs.push(response.data);
+      const newUse = { ...user, techs };
+
+      setUser(newUse);
+
+      setModalEdit(false);
     } catch (error) {
       toast.error("error");
     }
   }
   return (
-    <StyledFormModal onSubmit={handleSubmit(creatTec)} noValidate>
-      <div>
-        <h3>Cadastrar Tecnologia</h3>
+    <StyledFormEdit onSubmit={handleSubmit(editTec)} noValidate>
+      <div className="div-top">
+        <h3>Editar Tecnologia</h3>
 
-        <button onClick={() => setModalCreatTec(false)}>
+        <button onClick={() => setModalEdit(false)}>
           <AiOutlineClose />
         </button>
       </div>
       <label className="LabelText" htmlFor="nameTec">
         Nome
       </label>
-      <input
-        {...register("title")}
-        placeholder="Digite o nome da tecnologia"
-        id="nameTec"
-        type="text"
-      />
+      <div className="div_tche_value">
+        <p>{tecnologia.title}</p>
+      </div>
       {errors.title?.message && (
         <p className="LabelText">{errors.title.message}</p>
       )}
@@ -63,7 +67,12 @@ export function FormModal({ setModalCreatTec }) {
         <option value="Intermediário">Intermediário</option>
         <option value="Avançado">Avançado</option>
       </select>
-      <Button type="submit">Cadastrar Tecnologia</Button>
-    </StyledFormModal>
+      <div className="div_button">
+        <button className="registerTech" type="submit">
+          Cadastrar Tecnologia
+        </button>
+        <button className="deletTech">Excluir</button>
+      </div>
+    </StyledFormEdit>
   );
 }

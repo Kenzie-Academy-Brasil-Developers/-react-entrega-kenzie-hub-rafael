@@ -5,7 +5,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import { instance } from "../../../service/api";
 import { toast } from "react-toastify";
 
-export function ListTec() {
+export function ListTec({ setModalEdit, setTches }) {
   const { user, setUser } = useContext(AuthContext);
   const { techs } = user;
 
@@ -21,16 +21,20 @@ export function ListTec() {
       toast.error("deu merda");
     }
   }
+  function editTches(element) {
+    setModalEdit(true);
+    setTches(element);
+  }
 
   return (
     <StyledListTec>
       {techs.length ? (
-        techs.map(({ id, title, status }, i) => (
-          <li key={i}>
-            <p className="Title3">{title}</p>
+        techs.map((element, i) => (
+          <li key={i} onClick={() => editTches(element)}>
+            <p className="Title3">{element.title}</p>
             <div>
-              <span className="Headline">{status}</span>
-              <button id={id} onClick={() => delet(id, i)}>
+              <span className="Headline">{element.status}</span>
+              <button id={element.id} onClick={() => delet(element.id, i)}>
                 <RiDeleteBin6Line className="delet-img" />
               </button>
             </div>

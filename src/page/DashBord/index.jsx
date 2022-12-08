@@ -6,15 +6,17 @@ import { DivDashBord } from "./DivDashBord";
 import { HeaderDashBord } from "./HeaderDashBord";
 import { ListTec } from "./ListTec";
 import { ModalCreatTec } from "./ModalCreatTec";
+import { ModalEdit } from "./ModalEdit";
 import { ModalLogout } from "./ModalLogout";
 import { StyledDivDash } from "./styled";
 
 export function Dashbord() {
   const [renderModalLogout, setRenderModalLogout] = useState(false);
   const [modalCreatTec, setModalCreatTec] = useState(false);
+  const [modalEditUse, setModalEdit] = useState(false);
+  const [techs, setTches] = useState({});
 
   const { user } = useContext(AuthContext);
-  const { techs } = user;
 
   const navigate = useNavigate();
 
@@ -29,7 +31,11 @@ export function Dashbord() {
       )}
 
       {modalCreatTec && <ModalCreatTec setModalCreatTec={setModalCreatTec} />}
-
+      {modalEditUse ? (
+        <ModalEdit techs={techs} setModalEdit={setModalEdit} />
+      ) : (
+        ""
+      )}
       <StyledDivDash>
         <HeaderDashBord setRenderModal={setRenderModalLogout} />
         <DivDashBord />
@@ -38,7 +44,7 @@ export function Dashbord() {
 
           <button onClick={() => setModalCreatTec(true)}>+</button>
         </div>
-        <ListTec />
+        <ListTec setTches={setTches} setModalEdit={setModalEdit} />
       </StyledDivDash>
     </div>
   );

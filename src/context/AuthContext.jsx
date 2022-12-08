@@ -16,7 +16,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     async function loadUser() {
       const token = JSON.parse(localStorage.getItem("@token"));
-      console.log(token);
 
       if (!token) {
         setRemaking(false);
@@ -59,8 +58,6 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     }
   }
-  console.log(user);
-
   return (
     <AuthContext.Provider
       value={{
