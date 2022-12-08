@@ -43,7 +43,7 @@ export function FormEdit({ setModalEdit, techs: tecnologia }) {
   }
   async function delet() {
     try {
-      const response = await instance.delete(`/users/techs/${tecnologia.id}`);
+      await instance.delete(`/users/techs/${tecnologia.id}`);
 
       const techs = user.techs.filter(({ id }) => id !== idTech);
       const newUse = { ...user, techs };
