@@ -4,12 +4,14 @@ import { useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { Button } from "../../../../components/Button";
-import { AuthContext } from "../../../../context/AuthContext";
+import { AuthContext } from "../../../../context/ContextApi";
+import { ContextDashBord } from "../../../../context/TechUser";
 import { instance } from "../../../../service/api";
 import { schemaCreatTec } from "./schemaCreatTec";
 import { StyledFormModal } from "./styled";
 
-export function FormModal({ setModalCreatTec }) {
+export function FormModal() {
+  const { setModalCreatTec } = useContext(ContextDashBord);
   const {
     register,
     handleSubmit,

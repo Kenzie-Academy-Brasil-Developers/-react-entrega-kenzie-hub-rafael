@@ -1,9 +1,13 @@
 import { useContext, useState } from "react";
-import { Navigate } from "react-router-dom";
-import { AuthContext } from "../../../context/AuthContext.jsx";
+import { Navigate, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../context/ContextApi.jsx";
+import { ContextDashBord } from "../../../context/TechUser.jsx";
 import { StyledModalLogout } from "./styled.js";
 
-export function ModalLogout({ setRenderModal }) {
+export function ModalLogout() {
+  const navigate = useNavigate();
+  const { setRenderModalLogout } = useContext(ContextDashBord);
+
   const [logout, setLogout] = useState(false);
 
   const { setUser } = useContext(AuthContext);
@@ -14,6 +18,8 @@ export function ModalLogout({ setRenderModal }) {
       setUser({});
     }, 500);
     localStorage.removeItem("@token");
+    setRenderModalLogout(false);
+    navigate("/login");
   }
   return (
     <StyledModalLogout>
@@ -21,14 +27,14 @@ export function ModalLogout({ setRenderModal }) {
 
       <div className="div-logout">
         <div className="div-close">
-          <button onClick={() => setRenderModal(false)} className="close">
+          <button onClick={() => setRenderModalLogout(false)} className="close">
             X
           </button>
         </div>
         <h2 className="Title1">Tem certeza que quer sair?</h2>
 
         <div>
-          <button onClick={() => setRenderModal(false)} className="no">
+          <button onClick={() => setRenderModalLogout(false)} className="no">
             Não
           </button>
           <button onClick={() => logoutDash()} className="yes">

@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../context/ContextApi";
+import { ContextDashBord } from "../../context/TechUser";
 import { DivDashBord } from "./DivDashBord";
 import { HeaderDashBord } from "./HeaderDashBord";
 import { ListTec } from "./ListTec";
@@ -11,12 +11,9 @@ import { ModalLogout } from "./ModalLogout";
 import { StyledDivDash } from "./styled";
 
 export function Dashbord() {
-  const [renderModalLogout, setRenderModalLogout] = useState(false);
-  const [modalCreatTec, setModalCreatTec] = useState(false);
-  const [modalEditUse, setModalEdit] = useState(false);
-  const [techs, setTches] = useState({});
-
   const { user } = useContext(AuthContext);
+  const { renderModalLogout, modalCreatTec, setModalCreatTec, modalEditUse } =
+    useContext(ContextDashBord);
 
   const navigate = useNavigate();
 
@@ -25,27 +22,19 @@ export function Dashbord() {
   }
 
   return (
-    <div>
-      {renderModalLogout && (
-        <ModalLogout setRenderModal={setRenderModalLogout} />
-      )}
+    <StyledDivDash>
+      {renderModalLogout && <ModalLogout />}
 
-      {modalCreatTec && <ModalCreatTec setModalCreatTec={setModalCreatTec} />}
-      {modalEditUse ? (
-        <ModalEdit techs={techs} setModalEdit={setModalEdit} />
-      ) : (
-        ""
-      )}
-      <StyledDivDash>
-        <HeaderDashBord setRenderModal={setRenderModalLogout} />
-        <DivDashBord />
-        <div className="div-abrirModal">
-          <h3 className="Title3">Tecnologias</h3>
+      {modalCreatTec && <ModalCreatTec />}
+      {modalEditUse ? <ModalEdit /> : ""}
+      <HeaderDashBord />
+      <DivDashBord />
+      <div className="div-abrirModal">
+        <h3 className="Title3">Tecnologias</h3>
 
-          <button onClick={() => setModalCreatTec(true)}>+</button>
-        </div>
-        <ListTec setTches={setTches} setModalEdit={setModalEdit} />
-      </StyledDivDash>
-    </div>
+        <button onClick={() => setModalCreatTec(true)}>+</button>
+      </div>
+      <ListTec />
+    </StyledDivDash>
   );
 }

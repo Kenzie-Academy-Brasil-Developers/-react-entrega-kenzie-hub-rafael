@@ -1,11 +1,13 @@
 import { StyledListTec } from "./styled";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useContext } from "react";
-import { AuthContext } from "../../../context/AuthContext";
+import { AuthContext } from "../../../context/ContextApi";
 import { instance } from "../../../service/api";
 import { toast } from "react-toastify";
+import { ContextDashBord } from "../../../context/TechUser";
 
-export function ListTec({ setModalEdit, setTches }) {
+export function ListTec() {
+  const { setModalEdit, setTches } = useContext(ContextDashBord);
   const { user, setUser } = useContext(AuthContext);
   const { techs } = user;
 

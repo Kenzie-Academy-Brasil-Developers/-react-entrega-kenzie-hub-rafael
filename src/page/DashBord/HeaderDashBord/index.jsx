@@ -1,12 +1,15 @@
+import { useContext } from "react";
+import { ContextDashBord } from "../../../context/TechUser";
 import Image from "../../../IMG/Logo.svg";
 import { StyledHeaderDash } from "./styled";
 
-export function HeaderDashBord({ setRenderModal }) {
+export function HeaderDashBord() {
+  const { setRenderModalLogout } = useContext(ContextDashBord);
   return (
     <StyledHeaderDash>
       <div>
         <img src={Image} alt="kenzie hub" />
-        <button onClick={() => setRenderModal(true)}>Sair</button>
+        <button onClick={() => setRenderModalLogout(true)}>Sair</button>
       </div>
     </StyledHeaderDash>
   );

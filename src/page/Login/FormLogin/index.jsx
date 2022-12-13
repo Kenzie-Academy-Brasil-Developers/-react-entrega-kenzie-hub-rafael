@@ -7,11 +7,10 @@ import { registerSchemaLogin } from "./registerSchemaLogin/index.js";
 import { Link } from "react-router-dom";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useContext } from "react";
-import { AuthContext } from "../../../context/AuthContext";
+import { AuthContext } from "../../../context/ContextApi";
 
 export function FormLogin() {
   const { login, loading } = useContext(AuthContext);
-
   const {
     register,
     handleSubmit,
@@ -50,7 +49,7 @@ export function FormLogin() {
       <label className="LabelText LabelTextRegister">
         Ainda não possui uma conta?
       </label>
-      <Link to={"register"} className="buttonRegister">
+      <Link to={"/register"} className="buttonRegister">
         Cadastre-se
       </Link>
     </StyledForm>

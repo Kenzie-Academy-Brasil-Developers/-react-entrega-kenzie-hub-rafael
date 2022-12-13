@@ -3,12 +3,15 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 import { toast } from "react-toastify";
-import { AuthContext } from "../../../../context/AuthContext";
+import { AuthContext } from "../../../../context/ContextApi";
+import { ContextDashBord } from "../../../../context/TechUser";
 import { instance } from "../../../../service/api";
 import { schemaCreatTec } from "./schemaCreatTec";
 import { StyledFormEdit } from "./styled";
 
-export function FormEdit({ setModalEdit, techs: tecnologia }) {
+export function FormEdit() {
+  const { setModalEdit, techs: tecnologia } = useContext(ContextDashBord);
+
   const {
     register,
     handleSubmit,
