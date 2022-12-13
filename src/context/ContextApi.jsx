@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
         });
         setUser(data);
       } catch (error) {
-        toast.error("deu merda");
+        toast.error(error.response.data.message);
       } finally {
         setRemaking(false);
       }
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
       toast.success("Login feito com sucesso.");
       navigate("/dashbord");
     } catch (error) {
-      toast.error("Usuario não existe");
+      toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }

@@ -41,7 +41,7 @@ export function FormEdit() {
 
       setModalEdit(false);
     } catch (error) {
-      toast.error("error");
+      toast.error(error.response.data.message);
     }
   }
   async function delet() {
@@ -54,7 +54,7 @@ export function FormEdit() {
       setUser(newUse);
       setModalEdit(false);
     } catch (error) {
-      toast.error("error");
+      toast.error(error.response.data.message);
     }
   }
   return (

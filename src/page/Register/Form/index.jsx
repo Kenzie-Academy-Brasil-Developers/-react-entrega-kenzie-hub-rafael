@@ -33,7 +33,7 @@ export function Form() {
       toast.success("Usuario criado com sucesso!");
       setNextPage(false);
     } catch (error) {
-      toast.error("usuario já existe");
+      toast.error(error.response.data.message);
     }
   }
   return (

@@ -33,7 +33,7 @@ export function FormModal() {
       setUser(newUser);
       setModalCreatTec(false);
     } catch (error) {
-      toast.error("error");
+      toast.error(error.response.data.message);
     }
   }
   return (

@@ -20,7 +20,7 @@ export function ListTec() {
       const newUser = { ...user, techs };
       setUser(newUser);
     } catch (error) {
-      toast.error("deu merda");
+      toast.error(error.response.data.message);
     }
   }
   function editTches(event, element) {
